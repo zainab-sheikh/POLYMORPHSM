@@ -1,0 +1,142 @@
+// Shape interface representing a drawable shape
+interface IShape {
+    void draw();
+}
+
+// Abstract Shape class implementing the IShape interface
+abstract class Shape implements IShape {
+    // Abstract method to draw the shape
+    public abstract void draw();
+
+    // Abstract class can have fields, constructors, setters, and getters
+}
+
+// Square class extending Shape
+class Square extends Shape {
+    private double side;
+
+    public Square(double side) {
+        this.side = side;
+    }
+
+    // Implementing the draw method for Square
+    @Override
+    public void draw() {
+        System.out.println("Drawing Square with side: " + side);
+    }
+
+    // Override toString method to display Square details
+    @Override
+    public String toString() {
+        return "Square - Side: " + side;
+    }
+}
+
+// Rectangle class extending Shape
+class Rectangle extends Shape {
+    private double length;
+    private double width;
+
+    public Rectangle(double length, double width) {
+        this.length = length;
+        this.width = width;
+    }
+
+    // Implementing the draw method for Rectangle
+    @Override
+    public void draw() {
+        System.out.println("Drawing Rectangle with length: " + length + " and width: " + width);
+    }
+
+    // Override toString method to display Rectangle details
+    @Override
+    public String toString() {
+        return "Rectangle - Length: " + length + ", Width: " + width;
+    }
+}
+
+// Triangle class extending Shape
+class Triangle extends Shape {
+    private double base;
+    private double height;
+
+    public Triangle(double base, double height) {
+        this.base = base;
+        this.height = height;
+    }
+
+    // Implementing the draw method for Triangle
+    @Override
+    public void draw() {
+        System.out.println("Drawing Triangle with base: " + base + " and height: " + height);
+    }
+
+    // Override toString method to display Triangle details
+    @Override
+    public String toString() {
+        return "Triangle - Base: " + base + ", Height: " + height;
+    }
+}
+
+// LinkedListNode class representing a node in the LinkedList
+class LinkedListNode {
+    Shape shape;
+    LinkedListNode next;
+
+    public LinkedListNode(Shape shape) {
+        this.shape = shape;
+        this.next = null;
+    }
+}
+
+// ShapeLinkedList class representing a LinkedList of shapes
+public class ShapeLinkedList {
+    private LinkedListNode head;
+
+    // Method to add a shape to the linked list
+    public void addShape(Shape shape) {
+        LinkedListNode newNode = new LinkedListNode(shape);
+        if (head == null) {
+            head = newNode;
+        } else {
+            LinkedListNode current = head;
+            while (current.next != null) {
+                current = current.next;
+            }
+            current.next = newNode;
+        }
+    }
+
+    // Override toString method to display the details of all shapes in the linked list
+    @Override
+    public String toString() {
+        StringBuilder result = new StringBuilder();
+        LinkedListNode current = head;
+        while (current != null) {
+            result.append(current.shape.toString()).append("\n");
+            current = current.next;
+        }
+        return result.toString();
+    }
+
+    public static void main(String[] args) {
+        ShapeLinkedList shapeList = new ShapeLinkedList();
+
+        // Adding 100 random shapes to the linked list
+        for (int i = 0; i < 100; i++) {
+            double random = Math.random();
+            Shape shape;
+            if (random < 0.33) {
+                shape = new Square(Math.random() * 10);
+            } else if (random < 0.66) {
+                shape = new Rectangle(Math.random() * 10, Math.random() * 10);
+            } else {
+                shape = new Triangle(Math.random() * 10, Math.random() * 10);
+            }
+            shapeList.addShape(shape);
+        }
+
+        // Printing all shapes in the linked list
+        System.out.println(shapeList);
+    }
+}
